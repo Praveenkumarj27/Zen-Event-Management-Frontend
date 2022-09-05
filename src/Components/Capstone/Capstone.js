@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+
 import {
     Button,
     Dialog,
@@ -18,9 +18,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { url } from "../../Api/api";
 import {
   ColorButton2,
   CustomPaper,
@@ -41,6 +43,20 @@ const Capstone = () => {
       backdeployed: '',
     })
   
+    const[student,setStudent]=useState([])
+    let fetchData=async ()=>{
+      try {
+       let res= await axios.get(`${url}/capstonetasks`,{
+        headers:{
+          "Authorization":`${localStorage.getItem}(react_app_token)`
+        }
+       }) 
+       setStudent(res.data);
+      
+      } catch (error) {
+        console.log(error);
+      }
+    }
     // const dispatch = useDispatch()
     // const navigate = useNavigate()
     // const capstone = useSelector((state) => state.Capstone)
@@ -109,9 +125,9 @@ const Capstone = () => {
             <Grid item xs={10} sm={10} md={10} lg={10}>
               <QueryHeading>Praveenkumar J</QueryHeading>
               <Typography sx={{ color: "#7e8e9f" }}>
-                {/* {fetchedCapstone[0]
-                  ? fetchedCapstone[0].title
-                  : 'No Capstone Project Available'} */}
+                {fetchData[0]
+                  ? fetchData[0].title
+                  : 'No Capstone Project Available'}
               </Typography>
             </Grid>
             <Grid item xs={2} sm={2} md={2} lg={2}>
