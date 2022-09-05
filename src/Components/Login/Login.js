@@ -48,9 +48,9 @@ const Login = () => {
     try {
       const login = await axios.post(`${url}/login`, values);
       localStorage.setItem("react_app_token", login.data.token);
-      await setLoading(true);
+      // await setLoading(true);
       navigate("/dashboard");
-      await setLoading(false);
+      // await setLoading(false);
     } catch (error) {
       console.log(error);
     }

@@ -1,119 +1,86 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
-import React, { useState } from "react";
+import { FormControl, Grid, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../Sidebar/Sidebar";
-import Navbar from "../Navbar/Navbar";
 import { ColorButton, CustomPaper, CustomTypography } from "./adminComponents";
-  const Admin = ({ currentId, setCurrentId,}) => {
-    // const dispatch = useDispatch()
-    const navigate = useNavigate()
-    
-    const [hackathon, setHackathon] = useState({
-      title: '',
-      doclink: '',
-      description: '',
-    })
-  
-    const [capstone, setCapstone] = useState({
-      title: '',
-      doclink: '',
-      description: '',
-    })
-    
-    const submitHackathon =()=>{
+import axios from "axios";
+import { url } from "../../Api/api";
+import { useFormik } from "formik";
+const Admin = () => {
+  const navigate = useNavigate();
 
-    }
-    
-    const submitCapstone =(e)=>{
+  let submitCapstone = useFormik({
+    initialValues: {
+      student: "",
+      title: "",
+      doclink: "",
+      description: "",
+    },
 
-    }
+    onSubmit: async (values) => {
+      try {
+        const capstonetasks = await axios.post(`${url}/capstonetasks`, values, {
+          headers: {
+            Authorization: `${localStorage.getItem}(react_app_token)`,
+          },
+        });
+        alert(capstonetasks.data.message);
+        navigate("/capstone");
+        localStorage.setItem("react_app_token", capstonetasks.data.token);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
+  let submitHackathon = useFormik({
+    initialValues: {
+      student: "",
+      title: "",
+      doclink: "",
+      description: "",
+    },
 
-    // const submitHackathon = (e) => {
-    //   e.preventDefault()
-    //   console.log(hackathon)
-    //   dispatch(createHackathons(hackathon))
-    //   handleClickOpen()
-    // }
-  
-    // const submitCapstone = (e) => {
-    //   e.preventDefault()
-    //   console.log(capstone)
-    //   dispatch(createCapstone(capstone))
-    //   handleClickOpen()
-    // }
-  
-   
-  
-    //   Modal States Starts
-    // const [open, setOpen] = React.useState(false)
-  
-    // const handleClickOpen = () => {
-    //   setOpen(true)
-    // }
-  
-    // const handleClose = () => {
-    //   setOpen(false)
-    // }
-    //   Modal States Ends
-  
+    onSubmit: async (values) => {
+      try {
+        const hackathontasks = await axios.post(
+          `${url}/hackathontasks`,
+          values,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem}(react_app_token)`,
+            },
+          }
+        );
+        alert(hackathontasks.data.message);
+        navigate("/hackathon");
+        localStorage.setItem("react_app_token", hackathontasks.data.token);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
   return (
-    
     <Grid container spacing={2}>
       <Grid item xs={12} sm={12} md={4} lg={4}>
         <CustomPaper sx={{ p: 2 }}>
           <Typography variant="h4">Create Capstone Project</Typography>
 
           <form
-             autoComplete="off" noValidate onSubmit={submitCapstone}
+            autoComplete="off"
+            noValidate
+            onSubmit={submitCapstone.handleSubmit}
           >
-            {/* <Grid mb={2}>
-              <CustomTypography>User</CustomTypography>
-              <TextField
-                name="heading"
-                variant="outlined"
-                label="user"
-                type="text"
-                fullWidth
-                // value={capstone.title}
-                // onChange={(e) =>
-                //   setCapstone({
-                //     ...capstone,
-                //     title: e.target.value,
-                //   })
-                // }
-              />
-            </Grid> */}
-
-          
-
             <Grid mb={2}>
-              <CustomTypography>Capstone Project Title</CustomTypography>
-              <TextField
-                name="heading"
-                variant="outlined"
-                label="Title"
-                type="text"
-                fullWidth
-                // value={capstone.title}
-                // onChange={(e) =>
-                //   setCapstone({
-                //     ...capstone,
-                //     title: e.target.value,
-                //   })
-                // }
-              />
+              <CustomTypography>Student</CustomTypography>
+              <FormControl fullWidth>
+                <TextField
+                  type="text"
+                  label="Student"
+                  name="student"
+                  value={submitCapstone.values.student}
+                  onChange={submitCapstone.handleChange}
+                />
+              </FormControl>
             </Grid>
 
             <Grid mb={2}>
@@ -121,30 +88,36 @@ import { ColorButton, CustomPaper, CustomTypography } from "./adminComponents";
               <FormControl fullWidth>
                 <TextField
                   type="text"
-                    label="Document Link"
-                    // value={capstone.doclink}
-                  //   onChange={(e) =>
-                  //     setCapstone({
-                  //       ...capstone,
-                  //       doclink: e.target.value,
-                  //     })
-                  //   }
+                  label="Title"
+                  name="title"
+                  value={submitCapstone.values.title}
+                  onChange={submitCapstone.handleChange}
                 />
               </FormControl>
             </Grid>
+
+            <Grid mb={2}>
+              <CustomTypography>Capstone Document Link</CustomTypography>
+              <FormControl fullWidth>
+                <TextField
+                  type="text"
+                  label="Document Link"
+                  name="doclink"
+                  value={submitCapstone.values.doclink}
+                  onChange={submitCapstone.handleChange}
+                />
+              </FormControl>
+            </Grid>
+
             <Grid mb={2}>
               <CustomTypography>Capstone Project Description</CustomTypography>
               <FormControl fullWidth>
                 <TextField
                   type="text"
-                     label="Description"
-                    // value={capstone.description}
-                  //   onChange={(e) =>
-                  //     setCapstone({
-                  //       ...capstone,
-                  //       description: e.target.value,
-                  //     })
-                  //   }
+                  label="Description"
+                  name="description"
+                  value={submitCapstone.values.description}
+                  onChange={submitCapstone.handleChange}
                 />
               </FormControl>
             </Grid>
@@ -153,135 +126,78 @@ import { ColorButton, CustomPaper, CustomTypography } from "./adminComponents";
               <ColorButton type="submit" size="small">
                 Create Capstone
               </ColorButton>
-              <ColorButton sx={{ ml: 2 }}>Clear</ColorButton>
             </Grid>
           </form>
-
-          <div>
-            <Dialog
-              //   open={open}
-              //   onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                {"Submitted Successfully"}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  The Capstone Project has been added successfully.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button 
-                // onClick={handleClose}
-                >Close</Button>
-                <Button 
-                // onClick={() => navigate('/capstone')} autoFocus
-                >
-                  View Capstone
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
+          <div></div>
         </CustomPaper>
       </Grid>
-
-
 
       <Grid item xs={12} sm={12} md={4} lg={4}>
         <CustomPaper sx={{ p: 2 }}>
           <Typography variant="h4">Create Hackathon</Typography>
-
           <form
-             autoComplete="off" noValidate onSubmit={submitCapstone}
+            autoComplete="off"
+            noValidate
+            onSubmit={submitHackathon.handleSubmit}
           >
             <Grid mb={2}>
-              <CustomTypography>Hackathon Title</CustomTypography>
-              <TextField
-                name="heading"
-                variant="outlined"
-                label="Title"
-                type="text"
-                fullWidth
-                // value={hackathon.title}
-                // onChange={(e) =>
-                //   setHackathon({
-                //     ...hackathon,
-                //     title: e.target.value,
-                //   })
-                // }
-              />
-            </Grid>
-
-            <Grid mb={2}>
-              <CustomTypography>Hackathon Document Link</CustomTypography>
+              <CustomTypography>Student</CustomTypography>
               <FormControl fullWidth>
                 <TextField
                   type="text"
-                    label="Document Link"
-                    // value={hackathon.doclink}
-                  //   onChange={(e) =>
-                  //     setHackathon({
-                  //       ...hackathon,
-                  //       doclink: e.target.value,
-                  //     })
-                  //   }
+                  label="Student"
+                  name="student"
+                  value={submitHackathon.values.student}
+                  onChange={submitHackathon.handleChange}
                 />
               </FormControl>
             </Grid>
+
             <Grid mb={2}>
-              <CustomTypography>Hackathon Description</CustomTypography>
+              <CustomTypography>Capstone Document Link</CustomTypography>
               <FormControl fullWidth>
                 <TextField
                   type="text"
-                     label="Description"
-                    // value={hackathon.description}
-                  //   onChange={(e) =>
-                  //    setHackathon ({
-                  //       ...hackathon,
-                  //       description: e.target.value,
-                  //     })
-                  //   }
+                  label="Title"
+                  name="title"
+                  value={submitHackathon.values.title}
+                  onChange={submitHackathon.handleChange}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid mb={2}>
+              <CustomTypography>Capstone Document Link</CustomTypography>
+              <FormControl fullWidth>
+                <TextField
+                  type="text"
+                  label="Document Link"
+                  name="doclink"
+                  value={submitHackathon.values.doclink}
+                  onChange={submitHackathon.handleChange}
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid mb={2}>
+              <CustomTypography>Capstone Project Description</CustomTypography>
+              <FormControl fullWidth>
+                <TextField
+                  type="text"
+                  label="Description"
+                  name="description"
+                  value={submitHackathon.values.description}
+                  onChange={submitHackathon.handleChange}
                 />
               </FormControl>
             </Grid>
 
             <Grid mb={2} sx={{ display: "flex", justifyContent: "center" }}>
               <ColorButton type="submit" size="small">
-                Create Hackathon
+                Create Capstone
               </ColorButton>
-              <ColorButton sx={{ ml: 2 }}>Clear</ColorButton>
             </Grid>
           </form>
-
-          <div>
-            <Dialog
-              //   open={open}
-              //   onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                {"Submitted Successfully"}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  The Hackathon has been added successfully.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button 
-                // onClick={handleClose}
-                >Close</Button>
-                <Button 
-                // onClick={() => navigate('/hackathon')} autoFocus
-                >
-                  View Hackathons
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
         </CustomPaper>
       </Grid>
     </Grid>
