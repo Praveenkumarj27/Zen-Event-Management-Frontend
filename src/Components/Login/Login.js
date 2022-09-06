@@ -28,7 +28,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [showPwd, setShowPwd] = useState(true);
-  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     email: "",
@@ -48,9 +47,8 @@ const Login = () => {
     try {
       const login = await axios.post(`${url}/login`, values);
       localStorage.setItem("react_app_token", login.data.token);
-      // await setLoading(true);
+
       navigate("/dashboard");
-      // await setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -193,7 +191,6 @@ const Login = () => {
                         fullWidth
                         type="submit"
                         value="submit"
-                        loading={loading}
                         onClick={handleSubmit}
                       >
                         Login

@@ -1,17 +1,9 @@
-
 import {
-    Button,
-    Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Divider,
   Grid,
+  Link,
   Table,
   TableBody,
-  TableCell,
-  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
@@ -19,9 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { url } from "../../Api/api";
 import {
   ColorButton2,
@@ -29,79 +22,146 @@ import {
   CustomPaper3,
   HackathonChip,
   QueryHeading,
-  CapstoneDetail,
-  StyledTableCell
+  StyledTableCell,
 } from "./capstoneComponents";
 
+const CapstoneDetail = () => {
+  const [capstone, setCapstone] = useState([]);
+  let fetchData = async () => {
+    try {
+      let res = await axios.get(`${url}/capstonetasks`, {
+        headers: {
+          Authorization: `${localStorage.getItem}(react_app_token)`,
+        },
+      });
+      console.log(res.data);
+      setCapstone(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <CustomPaper
+      sx={{ mb: 1, mt: 1, cursor: "pointer" }}
+      // onClick={}
+    >
+      <Grid
+        container
+        sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+      >
+        <Grid item xs={10} sm={10} md={10} lg={10}>
+          {capstone.map((cap) => (
+            <QueryHeading>{cap.student}</QueryHeading>
+          ))}
+        </Grid>
+        <Grid item xs={2} sm={2} md={2} lg={2}>
+          <HackathonChip filled label="Capstone"></HackathonChip>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          pt: 0,
+          pb: 2,
+          pl: 2,
+          pr: 2,
+        }}
+      >
+        <Grid item xs={6} sm={6} md={6} lg={6}>
+          {capstone.map((cap) => (
+            <Typography sx={{ color: "#7e8e9f" }}>{cap.title}</Typography>
+          ))}
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          sm={6}
+          md={6}
+          lg={6}
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="flex-end"
+        >
+          <Typography variant="subtitle2" sx={{ color: "#555a8f" }}>
+            Yet to be graded
+          </Typography>
+        </Grid>
+      </Grid>
+    </CustomPaper>
+  );
+};
 
 const Capstone = () => {
-    const [fetchedCapstone, setFetchedCapstone] = useState([])
-    const [formData, setFormData] = useState({
-      frontsource: '',
-      frontdeployed: '',
-      backsource: '',
-      backdeployed: '',
-    })
-  
-    const[student,setStudent]=useState([])
-    let fetchData=async ()=>{
+  const navigate = useNavigate();
+
+  let formik = useFormik({
+    initialValues: {
+      frontsource: "",
+      frontdeployed: "",
+      backsource: "",
+      backdeployed: "",
+    },
+    validationSchema: Yup.object({
+      frontsource: Yup.string().required("Required"),
+      frontdeployed: Yup.string().required("Required"),
+      backsource: Yup.string().required("Required"),
+      backdeployed: Yup.string().required("Required"),
+    }),
+
+    onSubmit: async (values) => {
       try {
-       let res= await axios.get(`${url}/capstonetasks`,{
-        headers:{
-          "Authorization":`${localStorage.getItem}(react_app_token)`
-        }
-       }) 
-       setStudent(res.data);
-      
+        const capstoneSubmission = await axios.post(
+          `${url}/capstonesubmission`,
+          values,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem}(react_app_token)`,
+            },
+          }
+        );
+        alert(capstoneSubmission.data.message);
+        navigate("/capstone");
+        localStorage.setItem("react_app_token", capstoneSubmission.data.token);
       } catch (error) {
         console.log(error);
       }
+    },
+  });
+
+  const [capstone, setCapstone] = useState([]);
+  let fetchData = async () => {
+    try {
+      let res = await axios.get(`${url}/capstonetasks`, {
+        headers: {
+          Authorization: `${localStorage.getItem}(react_app_token)`,
+        },
+      });
+      console.log(res.data);
+      setCapstone(res.data);
+    } catch (error) {
+      console.log(error);
     }
-    // const dispatch = useDispatch()
-    // const navigate = useNavigate()
-    // const capstone = useSelector((state) => state.Capstone)
-    // console.log(capstone)
+  };
 
-    // const getSingleCapstone = (capstoneId) => {
-    //     const capstoneDetails = capstone.filter((cap) => cap._id === capstoneId)
-    //     setFetchedCapstone(capstoneDetails)
-    //     console.log(fetchedCapstone)
-    //   }
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     console.log(formData)
-    //     dispatch(createCapstoneSubmission(formData))
-    //     handleClickOpen()
-    //   }
-
-    const [open, setOpen] = React.useState(false)
-
-    const handleClickOpen = () => {
-        setOpen(true)
-      }
-    
-      const handleClose = () => {
-        setOpen(false)
-      }
-
-
-    //   useEffect(() => {
-    //     // dispatch(getHackathons())
-    //     dispatch(getCapstone())
-    //   }, [])
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Grid container sx={{ wordWrap: "break-word" }}>
-      <Grid item xs={12} sm={12} md={12} lg={12}>
+      {/* <Grid item xs={12} sm={12} md={12} lg={12}>
         <CustomPaper3></CustomPaper3>
-      </Grid>
+      </Grid> */}
       <Grid item xs={12} sm={12} md={12} lg={6} mb={2}>
-        {/* {capstone.map((cap) => ( */}
         <CapstoneDetail
-        // key={cap._id}
-        // capstone={cap}
-        // getSingleCapstone={getSingleCapstone}
+        //map
         />
         {/* ))} */}
       </Grid>
@@ -125,9 +185,7 @@ const Capstone = () => {
             <Grid item xs={10} sm={10} md={10} lg={10}>
               <QueryHeading>Praveenkumar J</QueryHeading>
               <Typography sx={{ color: "#7e8e9f" }}>
-                {fetchData[0]
-                  ? fetchData[0].title
-                  : 'No Capstone Project Available'}
+                {/* "No Data Available"} */}
               </Typography>
             </Grid>
             <Grid item xs={2} sm={2} md={2} lg={2}>
@@ -151,11 +209,7 @@ const Capstone = () => {
                   Task Document Link
                 </Typography>
                 <Typography>
-                  {/* <Link>
-                    {fetchedCapstone[0]
-                      ? fetchedCapstone[0].doclink
-                      : 'No Data Available'}
-                  </Link> */}
+                  <Link>{/* "No Data Available"} */}</Link>
                 </Typography>
                 <Typography
                   sx={{ fontWeight: "bolder", color: "#555a8f", mt: 2, mb: 2 }}
@@ -163,16 +217,16 @@ const Capstone = () => {
                   Guidelines:
                 </Typography>
                 <Typography p={0} m={0} sx={{ color: "#555a8f" }}>
-                  {/* {fetchedCapstone[0]
-                    ? fetchedCapstone[0].description
-                    : 'No Data Available'} */}
+                  {/* "No Data Available"} */}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
 
           <form
-          //   autoComplete="off" noValidate onSubmit={handleSubmit}
+            autoComplete="off"
+            validationSchema
+            onSubmit={formik.handleSubmit}
           >
             <TableContainer
             //  component={Paper}
@@ -189,18 +243,25 @@ const Capstone = () => {
                     <StyledTableCell>Front-end Source code</StyledTableCell>
                     <StyledTableCell align="left">
                       <TextField
-                        name="heading"
-                        variant="outlined"
-                        label="Link"
+                      size="small"
                         type="text"
+                        id="outlined"
+                        label="Link"
+                        name="frontsource"
+                        helperText={
+                          formik.touched.frontsource &&
+                          formik.errors.frontsource
+                            ? "Required"
+                            : ""
+                        }
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.frontsource}
+                        error={
+                          formik.touched.frontsource &&
+                          formik.errors.frontsource
+                        }
                         fullWidth
-                        // value={formData.frontsource}
-                        // onChange={(e) =>
-                        //   setFormData({
-                        //     ...formData,
-                        //     frontsource: e.target.value,
-                        //   })
-                        // }
                       />
                     </StyledTableCell>
                   </TableRow>
@@ -208,18 +269,22 @@ const Capstone = () => {
                     <StyledTableCell>Back-end Source code</StyledTableCell>
                     <StyledTableCell align="left">
                       <TextField
-                        name="heading"
-                        variant="outlined"
-                        label="Link"
                         type="text"
+                        id="outlined"
+                        label="Link"
+                        name="backsource"
+                        helperText={
+                          formik.touched.backsource && formik.errors.backsource
+                            ? "Required"
+                            : ""
+                        }
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.backsource}
+                        error={
+                          formik.touched.backsource && formik.errors.backsource
+                        }
                         fullWidth
-                        // value={formData.backsource}
-                        // onChange={(e) =>
-                        //   setFormData({
-                        //     ...formData,
-                        //     backsource: e.target.value,
-                        //   })
-                        // }
                       />
                     </StyledTableCell>
                   </TableRow>
@@ -227,18 +292,24 @@ const Capstone = () => {
                     <StyledTableCell>Front-end Deployed URL</StyledTableCell>
                     <StyledTableCell align="left">
                       <TextField
-                        name="heading"
-                        variant="outlined"
-                        label="Link"
                         type="text"
+                        id="outlined"
+                        label="Link"
+                        name="frontdeployed"
+                        helperText={
+                          formik.touched.frontdeployed &&
+                          formik.errors.frontdeployed
+                            ? "Required"
+                            : ""
+                        }
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.frontdeployed}
+                        error={
+                          formik.touched.frontdeployed &&
+                          formik.errors.frontdeployed
+                        }
                         fullWidth
-                        // value={formData.frontdeployed}
-                        // onChange={(e) =>
-                        //   setFormData({
-                        //     ...formData,
-                        //     frontdeployed: e.target.value,
-                        //   })
-                        // }
                       />
                     </StyledTableCell>
                   </TableRow>
@@ -246,18 +317,24 @@ const Capstone = () => {
                     <StyledTableCell>Back-end Deployed URL</StyledTableCell>
                     <StyledTableCell align="left">
                       <TextField
-                        name="heading"
-                        variant="outlined"
-                        label="Link"
                         type="text"
+                        id="outlined"
+                        label="Link"
+                        name="backdeployed"
+                        helperText={
+                          formik.touched.backdeployed &&
+                          formik.errors.backdeployed
+                            ? "Required"
+                            : ""
+                        }
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.backdeployed}
+                        error={
+                          formik.touched.backdeployed &&
+                          formik.errors.backdeployed
+                        }
                         fullWidth
-                        // value={formData.backdeployed}
-                        // onChange={(e) =>
-                        //   setFormData({
-                        //     ...formData,
-                        //     backdeployed: e.target.value,
-                        //   })
-                        // }
                       />
                     </StyledTableCell>
                   </TableRow>
@@ -266,45 +343,17 @@ const Capstone = () => {
             </TableContainer>
             <Grid
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 p: 7,
               }}
             >
-              <ColorButton2 type="submit" sx={{ borderRadius: '8px' }}>
+              <ColorButton2 type="submit" sx={{ borderRadius: "8px" }}>
                 Submit
               </ColorButton2>
             </Grid>
           </form>
-
-          <div>
-            <Dialog
-            //   open={open}
-            //   onClose={handleClose}
-            //   aria-labelledby="alert-dialog-title"
-            //   aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                {'Submitted Successfully'}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  The Capstone Project has been submitted successfully.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button 
-                // onClick={handleClose}
-                >Close</Button>
-                <Button 
-                // onClick={() => navigate('/capstone')} autoFocus
-                >
-                  View Capstone
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
         </CustomPaper>
       </Grid>
     </Grid>

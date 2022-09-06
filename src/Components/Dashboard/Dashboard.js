@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Sidebar from '../Sidebar/Sidebar'
 import Navbar from "../Navbar/Navbar"
+import './Dashboard.css'
 
 function Dashboard() {
   const navigate=useNavigate()
@@ -13,9 +14,9 @@ function Dashboard() {
   return (
     <>
    
-    {/* <Navbar></Navbar>
-    <Sidebar></Sidebar> */}
-    <h2>Dashboard Page</h2>
+    <Navbar></Navbar>
+    <Sidebar></Sidebar>
+    <h2 className='top'>Dashboard Page</h2>
   
    </>
   )

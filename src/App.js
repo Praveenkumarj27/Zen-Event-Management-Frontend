@@ -8,16 +8,11 @@ import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Navbar from "./Components/Navbar/Navbar";
-import Dummy from "./Dummy";
 
 function App() {
   return (
+   
     <BrowserRouter>
-      {/* <div id="wrapper">
-        <Navbar />
-        <div id="content">
-          <Sidebar />
-          <div className="row"> */}
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -27,11 +22,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/navbar" element={<Navbar />} />
-              <Route path="/dummy" element={<Dummy />} />
             </Routes>
-          {/* </div>
-        </div>
-      </div> */}
     </BrowserRouter>
   );
 }

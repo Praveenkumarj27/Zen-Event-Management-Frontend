@@ -13,9 +13,11 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import './Navbar.css'
+import './Navtask.css'
 import logo from "../../Assets/zenLogo.png"
 import { ColorButton2 } from "../Capstone/capstoneComponents";
+import { ColorButton } from "../Admin/adminComponents";
+import { Button } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -169,7 +171,7 @@ export default function PrimarySearchAppBar() {
       <AppBar position="static" className="app-bar">
         <Toolbar>
         <img src={logo} alt="logo" className="zen-logo" />
-        {/* <ColorButton2 onClick={back} marginRight="80px">Back to dashboard</ColorButton2> */}
+        <Button onClick={back} marginRight="80px">Back to dashboard</Button>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

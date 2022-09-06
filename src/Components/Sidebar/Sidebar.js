@@ -97,20 +97,6 @@ const Sidebar = ({ pageName, setPageName }) => {
           <ListItemText primary="Capstone" />
         </ListItemButton>
       </NavLink>
-	  <NavLink
-        to="/webinar"
-        style={{ textDecoration: "none", color: "#6c757d" }}
-      >
-        <ListItemButton
-          sx={{ ":hover": { color: "#6610f2" } }}
-          onClick={() => setPageName("Capstone")}
-        >
-          <ListItemIcon sx={{ ":hover": { color: "#6610f2" } }}>
-            <Event sx={{ color: "grey" }} />
-          </ListItemIcon>
-          <ListItemText primary="Webinar" />
-        </ListItemButton>
-      </NavLink>
     </div>
   );
 };

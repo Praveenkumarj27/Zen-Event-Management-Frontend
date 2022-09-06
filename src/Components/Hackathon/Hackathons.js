@@ -1,9 +1,31 @@
 import styled from "@emotion/styled";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Link, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import {
+  Divider,
+  Grid,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  tableCellClasses,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import * as Yup from "yup";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ColorButton2, CustomPaper, CustomPaper3, HackathonChip, QueryHeading } from "./hackathonComponents";
+import {
+  ColorButton2,
+  CustomPaper,
+  CustomPaper3,
+  HackathonChip,
+  QueryHeading,
+} from "./hackathonComponents";
+import { url } from "../../Api/api";
+import { useFormik } from "formik";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,25 +51,38 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein }
-  }
+export const WebcodeDetail = () => {
+  const [hackathon, setHackathon] = useState([]);
+  let fetchData = async () => {
+    try {
+      let res = await axios.get(`${url}/hackathontasks`, {
+        headers: {
+          Authorization: `${localStorage.getItem}(react_app_token)`,
+        },
+      });
+      console.log(res.data);
+      setHackathon(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-export const WebcodeDetail = ({ hackathon, getSingleHackathon }) => {
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <CustomPaper
       sx={{ mb: 1, mt: 1, cursor: "pointer" }}
-      //   onClick={() => getSingleHackathon(hackathon._id)}
+      // onClick={() => getSingleHackathon(hackathon._id)}
     >
       <Grid
         container
         sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
       >
         <Grid item xs={10} sm={10} md={10} lg={10}>
-          <QueryHeading>
-            {/* {hackathon.title} */}
-            PraveenKumar J
-          </QueryHeading>
+          {hackathon.map((hack) => (
+            <QueryHeading>{hack.student}</QueryHeading>
+          ))}
         </Grid>
         <Grid item xs={2} sm={2} md={2} lg={2}>
           <HackathonChip filled label="Hackathon"></HackathonChip>
@@ -56,8 +91,8 @@ export const WebcodeDetail = ({ hackathon, getSingleHackathon }) => {
       <Grid
         container
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
+          display: "flex",
+          justifyContent: "space-between",
           pt: 0,
           pb: 2,
           pl: 2,
@@ -65,10 +100,9 @@ export const WebcodeDetail = ({ hackathon, getSingleHackathon }) => {
         }}
       >
         <Grid item xs={6} sm={6} md={6} lg={6}>
-          {/* <QueryTag filled label={query.category}></QueryTag> */}
-          <Typography sx={{ color: '#7e8e9f' }}>
-            {/* {hackathon.title} */}
-            </Typography>
+          {hackathon.map((hack) => (
+            <Typography sx={{ color: "#7e8e9f" }}>{hack.title}</Typography>
+          ))}
         </Grid>
         <Grid
           item
@@ -80,7 +114,7 @@ export const WebcodeDetail = ({ hackathon, getSingleHackathon }) => {
           alignItems="flex-start"
           justifyContent="flex-end"
         >
-          <Typography variant="subtitle2" sx={{ color: '#555a8f' }}>
+          <Typography variant="subtitle2" sx={{ color: "#555a8f" }}>
             Yet to be graded
           </Typography>
         </Grid>
@@ -90,141 +124,141 @@ export const WebcodeDetail = ({ hackathon, getSingleHackathon }) => {
 };
 
 const Hackathons = () => {
-  const [fetchedHackathon, setFetchedHackathon] = useState([])
-  const [formData, setFormData] = useState({
-    frontsource: '',
-    frontdeployed: '',
-    backsource: '',
-    backdeployed: '',
-  })
+  const [fetchedHackathon, setFetchedHackathon] = useState([]);
+  let formik = useFormik({
+    initialValues: {
+      frontsource: "",
+      frontdeployed: "",
+      backsource: "",
+      backdeployed: "",
+    },
+    validationSchema: Yup.object({
+      frontsource: Yup.string().required("Required"),
+      frontdeployed: Yup.string().required("Required"),
+      backsource: Yup.string().required("Required"),
+      backdeployed: Yup.string().required("Required"),
+    }),
 
-  // const dispatch = useDispatch()
-  // const hackathons = useSelector((state) => state.Hackathons)
-  // console.log(hackathons)
+    onSubmit: async (values) => {
+      try {
+        const hackathonSubmission = await axios.post(
+          `${url}/hackathonsubmission`,
+          values,
+          {
+            headers: {
+              Authorization: `${localStorage.getItem}(react_app_token)`,
+            },
+          }
+        );
+        alert(hackathonSubmission.data.message);
+        navigate("/hackathon");
+        localStorage.setItem("react_app_token", hackathonSubmission.data.token);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
-  const getSingleHackathon = (hackathonId) => {
-    // const hackathonDetails = hackathons.filter(
-    //   (hackathon) => hackathon._id === hackathonId,
-    // )
-    // setFetchedHackathon(hackathonDetails)
-    console.log(fetchedHackathon)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(formData)
-    // dispatch(createHackathonSubmissions(formData))
-    handleClickOpen()
-  }
-
-  //   Modal States Starts
-  const [open, setOpen] = React.useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-  //   Modal States Ends
+  const [hackathon, setHackathon] = useState([]);
+  let fetchData = async () => {
+    try {
+      let res = await axios.get(`${url}/hackathontasks`, {
+        headers: {
+          Authorization: `${localStorage.getItem}(react_app_token)`,
+        },
+      });
+      console.log(res.data);
+      setHackathon(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    // dispatch(getHackathons())
-  }, [])
+    fetchData();
+  }, []);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-   <Grid container sx={{ wordWrap: 'break-word' }}>
-     <Grid item xs={12} sm={12} md={12} lg={12}>
-         <CustomPaper3></CustomPaper3>
-     </Grid>
-     <Grid item xs={12} sm={12} md={12} lg={6} mb={2}>
-        {/* {capstone.map((cap) => ( */}
+    <Grid container sx={{ wordWrap: "break-word" }}>
+      {/* <Grid item xs={12} sm={12} md={12} lg={12}>
+        <CustomPaper3></CustomPaper3>
+      </Grid> */}
+      <Grid item xs={12} sm={12} md={12} lg={6} mb={2}>
         <WebcodeDetail
-        // key={cap._id}
-        // capstone={cap}
-        // getSingleCapstone={getSingleCapstone}
+        //map
         />
         {/* ))} */}
       </Grid>
 
-      
-
       <Grid
-      item
-      xs={12}
-      sm={12}
-      md={12}
-      lg={6}
-      sx={{
-        pl: 2,
-        mt: 1,
-      }}
-    >
-      <CustomPaper sx={{ p: 2, wordWrap: 'break-word' }}>
-        <Grid
-        container
-        sx={{ display: 'flex', justifyContent: 'space-between', p: 2 }}
+        item
+        xs={12}
+        sm={12}
+        md={12}
+        lg={6}
+        sx={{
+          pl: 2,
+          mt: 1,
+        }}
       >
-        <Grid item xs={10} sm={10} md={10} lg={10}>
-              <QueryHeading>Praveenkumar J</QueryHeading>
-              <Typography sx={{ color: '#7e8e9f' }}>
-                {fetchedHackathon[0]
-                  ? fetchedHackathon[0].title
-                  : 'No Hackathons Available'}
+        <CustomPaper sx={{ p: 2, wordWrap: "break-word" }}>
+          <Grid
+            container
+            sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+          >
+            <Grid item xs={10} sm={10} md={10} lg={10}>
+              {hackathon.map((hack) => (
+                <QueryHeading>{hack.student}</QueryHeading>
+              ))}
+              <Typography sx={{ color: "#7e8e9f" }}>
+                {"No Data Available"}
               </Typography>
             </Grid>
             <Grid item xs={2} sm={2} md={2} lg={2}>
               <HackathonChip filled label="Hackathon"></HackathonChip>
             </Grid>
-        </Grid>
-        <Divider/>
-        <Grid item mb={4}>
+          </Grid>
+          <Divider />
+          <Grid item mb={4}>
             <Grid container mt={2}>
               <Grid item mt={2}>
                 <Typography
                   p={0}
                   m={0}
-                  sx={{ color: 'rgb(126 142 159)', mb: 2 }}
+                  sx={{ color: "rgb(126 142 159)", mb: 2 }}
                 >
                   Description:
                 </Typography>
                 <Typography
-                  sx={{ fontWeight: 'bolder', color: '#555a8f', mb: 2 }}
+                  sx={{ fontWeight: "bolder", color: "#555a8f", mb: 2 }}
                 >
                   Task Document Link
                 </Typography>
                 <Typography>
-                  <Link>
-                    {fetchedHackathon[0]
-                      ? fetchedHackathon[0].doclink
-                      : 'No Data Available'}
-                  </Link>
+                  <Link>{"No Data Available"}</Link>
                 </Typography>
                 <Typography
-                  sx={{ fontWeight: 'bolder', color: '#555a8f', mt: 2, mb: 2 }}
+                  sx={{ fontWeight: "bolder", color: "#555a8f", mt: 2, mb: 2 }}
                 >
                   Guidelines:
                 </Typography>
-                <Typography p={0} m={0} sx={{ color: '#555a8f' }}>
-                  {fetchedHackathon[0]
-                    ? fetchedHackathon[0].description
-                    : 'No Data Available'}
+                <Typography p={0} m={0} sx={{ color: "#555a8f" }}>
+                  {"No Data Available"}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
           <form
-          // autoComplete="off" noValidate onSubmit={handleSubmit}
+            autoComplete="off"
+            validationSchema
+            onSubmit={formik.handleSubmit}
           >
-            <TableContainer 
-            // 
-            >
+            <TableContainer>
               <Table aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                  <StyledTableCell>Code</StyledTableCell>
+                    <StyledTableCell>Code</StyledTableCell>
                     <StyledTableCell align="left">Submission</StyledTableCell>
                   </TableRow>
                 </TableHead>
@@ -233,18 +267,24 @@ const Hackathons = () => {
                     <StyledTableCell>Front-end Source code</StyledTableCell>
                     <StyledTableCell align="left">
                       <TextField
-                        name="heading"
-                        variant="outlined"
-                        label="Link"
                         type="text"
-                        fullWidth
-                        value={formData.frontsource}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            frontsource: e.target.value,
-                          })
+                        id="outlined"
+                        label="Link"
+                        name="frontsource"
+                        helperText={
+                          formik.touched.frontsource &&
+                          formik.errors.frontsource
+                            ? "Required"
+                            : ""
                         }
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.frontsource}
+                        error={
+                          formik.touched.frontsource &&
+                          formik.errors.frontsource
+                        }
+                        fullWidth
                       />
                     </StyledTableCell>
                   </TableRow>
@@ -252,18 +292,22 @@ const Hackathons = () => {
                     <StyledTableCell>Back-end Source code</StyledTableCell>
                     <StyledTableCell align="left">
                       <TextField
-                        name="heading"
-                        variant="outlined"
-                        label="Link"
                         type="text"
-                        fullWidth
-                        value={formData.backsource}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            backsource: e.target.value,
-                          })
+                        id="outlined"
+                        label="Link"
+                        name="backsource"
+                        helperText={
+                          formik.touched.backsource && formik.errors.backsource
+                            ? "Required"
+                            : ""
                         }
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.backsource}
+                        error={
+                          formik.touched.backsource && formik.errors.backsource
+                        }
+                        fullWidth
                       />
                     </StyledTableCell>
                   </TableRow>
@@ -271,18 +315,24 @@ const Hackathons = () => {
                     <StyledTableCell>Front-end Deployed URL</StyledTableCell>
                     <StyledTableCell align="left">
                       <TextField
-                        name="heading"
-                        variant="outlined"
-                        label="Link"
                         type="text"
-                        fullWidth
-                        value={formData.frontdeployed}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            frontdeployed: e.target.value,
-                          })
+                        id="outlined"
+                        label="Link"
+                        name="frontdeployed"
+                        helperText={
+                          formik.touched.frontdeployed &&
+                          formik.errors.frontdeployed
+                            ? "Required"
+                            : ""
                         }
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.frontdeployed}
+                        error={
+                          formik.touched.frontdeployed &&
+                          formik.errors.frontdeployed
+                        }
+                        fullWidth
                       />
                     </StyledTableCell>
                   </TableRow>
@@ -290,18 +340,24 @@ const Hackathons = () => {
                     <StyledTableCell>Back-end Deployed URL</StyledTableCell>
                     <StyledTableCell align="left">
                       <TextField
-                        name="heading"
-                        variant="outlined"
-                        label="Link"
                         type="text"
-                        fullWidth
-                        value={formData.backdeployed}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            backdeployed: e.target.value,
-                          })
+                        id="outlined"
+                        label="Link"
+                        name="backdeployed"
+                        helperText={
+                          formik.touched.backdeployed &&
+                          formik.errors.backdeployed
+                            ? "Required"
+                            : ""
                         }
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.backdeployed}
+                        error={
+                          formik.touched.backdeployed &&
+                          formik.errors.backdeployed
+                        }
+                        fullWidth
                       />
                     </StyledTableCell>
                   </TableRow>
@@ -311,51 +367,21 @@ const Hackathons = () => {
 
             <Grid
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 p: 7,
               }}
             >
-              <ColorButton2 type="submit" sx={{ borderRadius: '8px' }}>
+              <ColorButton2 type="submit" sx={{ borderRadius: "8px" }}>
                 Submit
               </ColorButton2>
             </Grid>
           </form>
-
-          <div>
-            <Dialog
-              // open={open}
-              // onClose={handleClose}
-              // aria-labelledby="alert-dialog-title"
-              // aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                {'Submitted Successfully'}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  The Hackathon has been submitted successfully.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button 
-                // onClick={handleClose}
-                >Close</Button>
-                <Button
-                // onClick={() => navigate('/hackathon')} autoFocus
-                >
-                  View Hackathons
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
-
-
-      </CustomPaper>
+        </CustomPaper>
       </Grid>
-   </Grid>
-    );
+    </Grid>
+  );
 };
 
 export default Hackathons;

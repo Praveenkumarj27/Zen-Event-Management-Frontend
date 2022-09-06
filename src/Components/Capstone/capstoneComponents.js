@@ -15,7 +15,6 @@ export const CustomPaper = styled(Paper)({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    // padding: '12px 16px',
     borderRadius: '8px',
     height: '32px',
     fontWeight: 700,
@@ -79,55 +78,4 @@ export const CustomPaper = styled(Paper)({
     },
   }));
   
-  export const CapstoneDetail = ({ capstone, getSingleCapstone }) => {
-    return (
-      <CustomPaper
-        sx={{ mb: 1, mt: 1, cursor: "pointer" }}
-        onClick={() => getSingleCapstone(capstone._id)}
-      >
-        <Grid
-          container
-          sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
-        >
-          <Grid item xs={10} sm={10} md={10} lg={10}>
-            <QueryHeading>Praveenkumar J</QueryHeading>
-          </Grid>
-          <Grid item xs={2} sm={2} md={2} lg={2}>
-            <HackathonChip filled label="Capstone"></HackathonChip>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            pt: 0,
-            pb: 2,
-            pl: 2,
-            pr: 2,
-          }}
-        >
-          <Grid item xs={6} sm={6} md={6} lg={6}>
-            {/* <QueryTag filled label={query.category}></QueryTag> */}
-            <Typography sx={{ color: "#7e8e9f" }}>
-              {/* {capstone.title} */}
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            sm={6}
-            md={6}
-            lg={6}
-            display="flex"
-            alignItems="flex-start"
-            justifyContent="flex-end"
-          >
-            <Typography variant="subtitle2" sx={{ color: "#555a8f" }}>
-              Yet to be graded
-            </Typography>
-          </Grid>
-        </Grid>
-      </CustomPaper>
-    );
-  };
+  
