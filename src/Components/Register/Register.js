@@ -54,6 +54,7 @@ const Register = () => {
   const handleSubmit = async (values) => {
     try {
       const register = await axios.post(`${url}/register`, values);
+      alert(register.data.message)
       navigate("/");
     } catch (error) {
       console.log(error);

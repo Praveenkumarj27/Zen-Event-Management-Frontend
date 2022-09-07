@@ -2,13 +2,13 @@
 .firstCol {
     width: 4.1rem;
     height: 110vh;
-    transition: width 1s;
-    -webkit-transition: height 1s;
+    /* transition: width 1s;
+    -webkit-transition: height 1s; */
     overflow: hidden;
     position: relative;
     z-index: 9;
     background-color:  rgb(249, 251, 253) ;
-     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;;
+     /* box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;; */
 }
 
 .firstCol:hover {
