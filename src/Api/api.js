@@ -1,1 +1,1 @@
-export const url="http://localhost:7002"
+export const url="https://zen-event-management.herokuapp.com"
