@@ -5,7 +5,7 @@ import axios from "axios";
 import * as Yup from "yup";
 import { url } from "../../Api/api";
 import { useFormik } from "formik";
-import Navtask from "../Tasknavbar/Navtask";
+import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 const Admin = () => {
   const navigate = useNavigate();
@@ -47,6 +47,7 @@ const Admin = () => {
       doclink: "",
       description: "",
     },
+
     validationSchema: Yup.object({
       student: Yup.string().required("Required"),
       title: Yup.string().required("Required"),
@@ -75,9 +76,10 @@ const Admin = () => {
   });
 
   return (
-    <>
-     <Navtask></Navtask>
-      <Grid container spacing={2} marginLeft="170px" marginTop="10px">
+    <div className="admin">
+      <Navbar />
+      <Sidebar></Sidebar>
+      <Grid container spacing={2} marginLeft="170px" marginTop="-700px">
         <Grid item xs={12} sm={12} md={4} lg={4}>
           <CustomPaper sx={{ p: 2 }}>
             <Typography variant="h4">Create Capstone Project</Typography>
@@ -318,7 +320,7 @@ const Admin = () => {
           </CustomPaper>
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 };
 

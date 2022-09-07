@@ -13,35 +13,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useNavigate } from "react-router-dom";
-import './Navbar.css'
-import logo from "../../Assets/zenLogo.png"
-import { ColorButton2 } from "../Capstone/capstoneComponents";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+import "./Navbar.css";
+import logo from "../../Assets/zenLogo.png";
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
@@ -58,7 +31,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-    const navigate=useNavigate()
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -87,9 +60,9 @@ export default function PrimarySearchAppBar() {
     navigate("/");
   };
 
-  const back=()=>{
-    navigate("/dashboard")
-  }
+  const back = () => {
+    navigate("/dashboard");
+  };
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -168,8 +141,7 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" className="app-bar">
         <Toolbar>
-        <img src={logo} alt="logo" className="zen-logo" />
-        {/* <ColorButton2 onClick={back} marginRight="80px">Back to dashboard</ColorButton2> */}
+          <img src={logo} alt="logo" className="zen-logo" />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
@@ -181,7 +153,7 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle className="logo"/>
+              <AccountCircle className="logo" />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

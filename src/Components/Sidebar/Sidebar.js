@@ -1,20 +1,12 @@
 import React from "react";
 import "./Sidebar.css";
-import logo from "../../Assets/zenLogo.png";
 import { Link, NavLink } from "react-router-dom";
-import GroupsIcon from "@mui/icons-material/Groups";
+import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import {
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import {
-	AdminPanelSettings,
+  AdminPanelSettings,
   EmojiEvents,
   Event,
   EventNote,
-  Groups,
   ImportContacts,
 } from "@mui/icons-material";
 
@@ -23,33 +15,34 @@ const Sidebar = ({ pageName, setPageName }) => {
     JSON.parse(localStorage.getItem("profile"))
   );
   return (
-	
     <div className="firstCol">
-     {/* {user?.result?.typeOfUser === 'admin'?( */}
-	 <>
-            <NavLink
-            to="/admin"
-            style={{
-              textDecoration: 'none',
-              color: '#6c757d',
-            }}>
-                <ListItemButton
-                sx={{ ':hover': { color: '#6610f2' } }}
-                onClick={() => setPageName('Admin')}
-                >
-                <ListItemIcon
-                sx={{
-                    ':hover': { color: '#6610f2' },
-                    overflow: 'hidden',
-                  }}>
-                    <AdminPanelSettings sx={{ color: 'grey'}}/>
-                </ListItemIcon >
-                <ListItemText primary="Admin"/>
-                </ListItemButton>
-            </NavLink>
-            </>
-         {/* ):null}   */}
-    
+      {/* {user?.result?.typeOfUser === 'admin'?( */}
+      <>
+        <NavLink
+          to="/admin"
+          style={{
+            textDecoration: "none",
+            color: "#6c757d",
+          }}
+        >
+          <ListItemButton
+            sx={{ ":hover": { color: "#6610f2" } }}
+            onClick={() => setPageName("Admin")}
+          >
+            <ListItemIcon
+              sx={{
+                ":hover": { color: "#6610f2" },
+                overflow: "hidden",
+              }}
+            >
+              <AdminPanelSettings sx={{ color: "grey" }} />
+            </ListItemIcon>
+            <ListItemText primary="Admin" />
+          </ListItemButton>
+        </NavLink>
+      </>
+      {/* ):null}   */}
+
       <NavLink
         to="/dashboard"
         style={{
