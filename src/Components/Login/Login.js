@@ -46,8 +46,9 @@ const Login = () => {
   const handleSubmit = async (values) => {
     try {
       const login = await axios.post(`${url}/login`, values);
-      localStorage.setItem("react_app_token", login.data.token);
-
+      // sessionStorage.setItem("react_app_token", login.data.token);
+      window.sessionStorage.setItem('react_app_token',login.data.token)
+      window.sessionStorage.setItem('role',login.data.typeofUser)
       navigate("/dashboard");
     } catch (error) {
       console.log(error);

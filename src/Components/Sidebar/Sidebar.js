@@ -11,12 +11,13 @@ import {
 } from "@mui/icons-material";
 
 const Sidebar = ({ pageName, setPageName }) => {
-  const [user, setUser] = React.useState(
-    JSON.parse(localStorage.getItem("profile"))
+  const [role] = React.useState(
+    window.sessionStorage.getItem("role")
   );
+  console.log(role);
   return (
     <div className="firstCol">
-      {/* {user?.result?.typeOfUser === 'admin'?( */}
+       {role === 'admin'?( 
       <>
         <NavLink
           to="/admin"
@@ -39,9 +40,10 @@ const Sidebar = ({ pageName, setPageName }) => {
             </ListItemIcon>
             <ListItemText primary="Admin" />
           </ListItemButton>
-        </NavLink>
+        </NavLink> 
       </>
-       {/* ):null}    */}
+      ):null}   
+    
 
       <NavLink
         to="/dashboard"

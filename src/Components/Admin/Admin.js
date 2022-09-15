@@ -79,7 +79,7 @@ const Admin = () => {
     <div className="admin">
       <Navbar />
       <Sidebar></Sidebar>
-      <Grid container spacing={2} marginLeft="170px" marginTop="-700px">
+      <Grid container spacing={2} marginLeft="100px" marginTop="-700px">
         <Grid item xs={12} sm={12} md={4} lg={4}>
           <CustomPaper sx={{ p: 2 }}>
             <Typography variant="h4">Create Capstone Project</Typography>
@@ -201,7 +201,7 @@ const Admin = () => {
           </CustomPaper>
         </Grid>
 
-        <Grid item xs={12} sm={12} md={4} lg={4}>
+        <Grid item xs={12} sm={12} md={4} lg={4} marginLeft="50px">
           <CustomPaper sx={{ p: 2 }}>
             <Typography variant="h4">Create Hackathon</Typography>
             <form
