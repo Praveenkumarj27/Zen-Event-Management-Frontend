@@ -26,6 +26,7 @@ import {
 import { url } from "../../Api/api";
 import { useFormik } from "formik";
 import Navbar from "../Navbar/Navbar";
+import Sidebar from "../Sidebar/Sidebar";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -171,215 +172,234 @@ const Hackathons = () => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <Navbar></Navbar>
-      <h2>Hackathon</h2>
-      <Grid container sx={{ wordWrap: "break-word" }}>
-        <Grid item xs={12} sm={12} md={12} lg={6} mb={2}>
-          <WebcodeDetail />
-        </Grid>
-
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          lg={6}
-          sx={{
-            pl: 2,
-            mt: 1,
-          }}
-        >
-          <CustomPaper sx={{ p: 2, wordWrap: "break-word" }}>
-            <Grid
-              container
-              sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
-            >
-              <Grid item xs={10} sm={10} md={10} lg={10}>
-                <QueryHeading></QueryHeading>
-
-                <Typography sx={{ color: "#7e8e9f" }}>
-                  {"No Data Available"}
-                </Typography>
-              </Grid>
-              <Grid item xs={2} sm={2} md={2} lg={2}>
-                <HackathonChip filled label="Hackathon"></HackathonChip>
-              </Grid>
+    <div id="wrapper">
+      <Sidebar />
+      <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+          <Navbar />
+          <h2 className="mt-3" style={{paddingLeft:"10px"}}>Hackathon</h2>
+          <Grid container sx={{ wordWrap: "break-word",marginLeft:"10px" }}>
+            <Grid item xs={12} sm={12} md={12} lg={6} mb={2}>
+              <WebcodeDetail />
             </Grid>
-            <Divider />
-            <Grid item mb={4}>
-              <Grid container mt={2}>
-                <Grid item mt={2}>
-                  <Typography
-                    p={0}
-                    m={0}
-                    sx={{ color: "rgb(126 142 159)", mb: 2 }}
-                  >
-                    Description:
-                  </Typography>
-                  <Typography
-                    sx={{ fontWeight: "bolder", color: "#555a8f", mb: 2 }}
-                  >
-                    Task Document Link
-                  </Typography>
-                  <Typography>
-                    <Link>{"No Data Available"}</Link>
-                  </Typography>
-                  <Typography
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              lg={6}
+              sx={{
+                pl: 2,
+                mt: 1,
+              }}
+            >
+              <CustomPaper sx={{ p: 2, wordWrap: "break-word" }}>
+                <Grid
+                  container
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    p: 2,
+                  }}
+                >
+                  <Grid item xs={10} sm={10} md={10} lg={10}>
+                    <QueryHeading></QueryHeading>
+
+                    <Typography sx={{ color: "#7e8e9f" }}>
+                      {"No Data Available"}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2} sm={2} md={2} lg={2}>
+                    <HackathonChip filled label="Hackathon"></HackathonChip>
+                  </Grid>
+                </Grid>
+                <Divider />
+                <Grid item mb={4}>
+                  <Grid container mt={2}>
+                    <Grid item mt={2}>
+                      <Typography
+                        p={0}
+                        m={0}
+                        sx={{ color: "rgb(126 142 159)", mb: 2 }}
+                      >
+                        Description:
+                      </Typography>
+                      <Typography
+                        sx={{ fontWeight: "bolder", color: "#555a8f", mb: 2 }}
+                      >
+                        Task Document Link
+                      </Typography>
+                      <Typography>
+                        <Link>{"No Data Available"}</Link>
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: "bolder",
+                          color: "#555a8f",
+                          mt: 2,
+                          mb: 2,
+                        }}
+                      >
+                        Guidelines:
+                      </Typography>
+                      <Typography p={0} m={0} sx={{ color: "#555a8f" }}>
+                        {"No Data Available"}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <form
+                  autoComplete="off"
+                  validationSchema
+                  onSubmit={formik.handleSubmit}
+                >
+                  <TableContainer>
+                    <Table aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell>Code</StyledTableCell>
+                          <StyledTableCell align="left">
+                            Submission
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow>
+                          <StyledTableCell>
+                            Front-end Source code
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            <TextField
+                              size="small"
+                              type="text"
+                              id="outlined"
+                              label="Link"
+                              name="frontsource"
+                              helperText={
+                                formik.touched.frontsource &&
+                                formik.errors.frontsource
+                                  ? "Required"
+                                  : ""
+                              }
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.frontsource}
+                              error={
+                                formik.touched.frontsource &&
+                                formik.errors.frontsource
+                              }
+                              fullWidth
+                            />
+                          </StyledTableCell>
+                        </TableRow>
+                        <TableRow>
+                          <StyledTableCell>
+                            Back-end Source code
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            <TextField
+                              size="small"
+                              type="text"
+                              id="outlined"
+                              label="Link"
+                              name="backsource"
+                              helperText={
+                                formik.touched.backsource &&
+                                formik.errors.backsource
+                                  ? "Required"
+                                  : ""
+                              }
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.backsource}
+                              error={
+                                formik.touched.backsource &&
+                                formik.errors.backsource
+                              }
+                              fullWidth
+                            />
+                          </StyledTableCell>
+                        </TableRow>
+                        <TableRow>
+                          <StyledTableCell>
+                            Front-end Deployed URL
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            <TextField
+                              size="small"
+                              type="text"
+                              id="outlined"
+                              label="Link"
+                              name="frontdeployed"
+                              helperText={
+                                formik.touched.frontdeployed &&
+                                formik.errors.frontdeployed
+                                  ? "Required"
+                                  : ""
+                              }
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.frontdeployed}
+                              error={
+                                formik.touched.frontdeployed &&
+                                formik.errors.frontdeployed
+                              }
+                              fullWidth
+                            />
+                          </StyledTableCell>
+                        </TableRow>
+                        <TableRow>
+                          <StyledTableCell>
+                            Back-end Deployed URL
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            <TextField
+                              size="small"
+                              type="text"
+                              id="outlined"
+                              label="Link"
+                              name="backdeployed"
+                              helperText={
+                                formik.touched.backdeployed &&
+                                formik.errors.backdeployed
+                                  ? "Required"
+                                  : ""
+                              }
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.backdeployed}
+                              error={
+                                formik.touched.backdeployed &&
+                                formik.errors.backdeployed
+                              }
+                              fullWidth
+                            />
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+
+                  <Grid
                     sx={{
-                      fontWeight: "bolder",
-                      color: "#555a8f",
-                      mt: 2,
-                      mb: 2,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      p: 7,
                     }}
                   >
-                    Guidelines:
-                  </Typography>
-                  <Typography p={0} m={0} sx={{ color: "#555a8f" }}>
-                    {"No Data Available"}
-                  </Typography>
-                </Grid>
-              </Grid>
+                    <ColorButton2 type="submit" sx={{ borderRadius: "8px" }}>
+                      Submit
+                    </ColorButton2>
+                  </Grid>
+                </form>
+              </CustomPaper>
             </Grid>
-            <form
-              autoComplete="off"
-              validationSchema
-              onSubmit={formik.handleSubmit}
-            >
-              <TableContainer>
-                <Table aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
-                      <StyledTableCell>Code</StyledTableCell>
-                      <StyledTableCell align="left">Submission</StyledTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <StyledTableCell>Front-end Source code</StyledTableCell>
-                      <StyledTableCell align="left">
-                        <TextField
-                          size="small"
-                          type="text"
-                          id="outlined"
-                          label="Link"
-                          name="frontsource"
-                          helperText={
-                            formik.touched.frontsource &&
-                            formik.errors.frontsource
-                              ? "Required"
-                              : ""
-                          }
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.frontsource}
-                          error={
-                            formik.touched.frontsource &&
-                            formik.errors.frontsource
-                          }
-                          fullWidth
-                        />
-                      </StyledTableCell>
-                    </TableRow>
-                    <TableRow>
-                      <StyledTableCell>Back-end Source code</StyledTableCell>
-                      <StyledTableCell align="left">
-                        <TextField
-                          size="small"
-                          type="text"
-                          id="outlined"
-                          label="Link"
-                          name="backsource"
-                          helperText={
-                            formik.touched.backsource &&
-                            formik.errors.backsource
-                              ? "Required"
-                              : ""
-                          }
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.backsource}
-                          error={
-                            formik.touched.backsource &&
-                            formik.errors.backsource
-                          }
-                          fullWidth
-                        />
-                      </StyledTableCell>
-                    </TableRow>
-                    <TableRow>
-                      <StyledTableCell>Front-end Deployed URL</StyledTableCell>
-                      <StyledTableCell align="left">
-                        <TextField
-                          size="small"
-                          type="text"
-                          id="outlined"
-                          label="Link"
-                          name="frontdeployed"
-                          helperText={
-                            formik.touched.frontdeployed &&
-                            formik.errors.frontdeployed
-                              ? "Required"
-                              : ""
-                          }
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.frontdeployed}
-                          error={
-                            formik.touched.frontdeployed &&
-                            formik.errors.frontdeployed
-                          }
-                          fullWidth
-                        />
-                      </StyledTableCell>
-                    </TableRow>
-                    <TableRow>
-                      <StyledTableCell>Back-end Deployed URL</StyledTableCell>
-                      <StyledTableCell align="left">
-                        <TextField
-                          size="small"
-                          type="text"
-                          id="outlined"
-                          label="Link"
-                          name="backdeployed"
-                          helperText={
-                            formik.touched.backdeployed &&
-                            formik.errors.backdeployed
-                              ? "Required"
-                              : ""
-                          }
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.backdeployed}
-                          error={
-                            formik.touched.backdeployed &&
-                            formik.errors.backdeployed
-                          }
-                          fullWidth
-                        />
-                      </StyledTableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-
-              <Grid
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  p: 7,
-                }}
-              >
-                <ColorButton2 type="submit" sx={{ borderRadius: "8px" }}>
-                  Submit
-                </ColorButton2>
-              </Grid>
-            </form>
-          </CustomPaper>
-        </Grid>
-      </Grid>
-    </>
+          </Grid>
+        </div>
+      </div>
+    </div>
   );
 };
 

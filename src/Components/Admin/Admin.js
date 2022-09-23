@@ -76,250 +76,272 @@ const Admin = () => {
   });
 
   return (
-    <div className="admin">
-      <Navbar />
-      <Sidebar></Sidebar>
-      <Grid container spacing={2} marginLeft="100px" marginTop="-700px">
-        <Grid item xs={12} sm={12} md={4} lg={4}>
-          <CustomPaper sx={{ p: 2 }}>
-            <Typography variant="h4">Create Capstone Project</Typography>
-
-            <form
-              autoComplete="off"
-              validationSchema
-              onSubmit={submitCapstone.handleSubmit}
+    <div id="wrapper">
+      <Sidebar />
+      <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+          <Navbar />
+          <div className="admin">
+            <Grid
+              container
+              spacing={2}
+              marginLeft="100px"
+              marginTop="10px"
+              overflow="hidden"
             >
-              <Grid mb={2}>
-                <CustomTypography>Student</CustomTypography>
-                <FormControl fullWidth>
-                  <TextField
-                    type="text"
-                    id="outlined"
-                    label="Student"
-                    name="student"
-                    helperText={
-                      submitCapstone.touched.student &&
-                      submitCapstone.errors.student
-                        ? "Required"
-                        : ""
-                    }
-                    onChange={submitCapstone.handleChange}
-                    onBlur={submitCapstone.handleBlur}
-                    value={submitCapstone.values.student}
-                    error={
-                      submitCapstone.touched.student &&
-                      submitCapstone.errors.student
-                    }
-                  />
-                </FormControl>
+              <Grid item xs={12} sm={12} md={4} lg={4}>
+                <CustomPaper sx={{ p: 2 }}>
+                  <Typography variant="h4">Create Capstone </Typography>
+
+                  <form
+                    autoComplete="off"
+                    validationSchema
+                    onSubmit={submitCapstone.handleSubmit}
+                  >
+                    <Grid mb={2}>
+                      <CustomTypography>Student</CustomTypography>
+                      <FormControl fullWidth>
+                        <TextField
+                          type="text"
+                          id="outlined"
+                          label="Student"
+                          name="student"
+                          helperText={
+                            submitCapstone.touched.student &&
+                            submitCapstone.errors.student
+                              ? "Required"
+                              : ""
+                          }
+                          onChange={submitCapstone.handleChange}
+                          onBlur={submitCapstone.handleBlur}
+                          value={submitCapstone.values.student}
+                          error={
+                            submitCapstone.touched.student &&
+                            submitCapstone.errors.student
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+
+                    <Grid mb={2}>
+                      <CustomTypography>Title</CustomTypography>
+                      <FormControl fullWidth>
+                        <TextField
+                          type="text"
+                          id="outlined"
+                          label="Title"
+                          name="title"
+                          helperText={
+                            submitCapstone.touched.title &&
+                            submitCapstone.errors.title
+                              ? "Required"
+                              : ""
+                          }
+                          onChange={submitCapstone.handleChange}
+                          onBlur={submitCapstone.handleBlur}
+                          value={submitCapstone.values.title}
+                          error={
+                            submitCapstone.touched.title &&
+                            submitCapstone.errors.title
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+
+                    <Grid mb={2}>
+                      <CustomTypography>
+                        Capstone Document Link
+                      </CustomTypography>
+                      <FormControl fullWidth>
+                        <TextField
+                          type="text"
+                          id="outlined"
+                          label="Document Link"
+                          name="doclink"
+                          helperText={
+                            submitCapstone.touched.doclink &&
+                            submitCapstone.errors.doclink
+                              ? "Required"
+                              : ""
+                          }
+                          onChange={submitCapstone.handleChange}
+                          onBlur={submitCapstone.handleBlur}
+                          value={submitCapstone.values.doclink}
+                          error={
+                            submitCapstone.touched.doclink &&
+                            submitCapstone.errors.doclink
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+
+                    <Grid mb={2}>
+                      <CustomTypography>
+                        Capstone Project Description
+                      </CustomTypography>
+                      <FormControl fullWidth>
+                        <TextField
+                          type="text"
+                          id="outlined"
+                          label="Description"
+                          name="description"
+                          helperText={
+                            submitCapstone.touched.description &&
+                            submitCapstone.errors.description
+                              ? "Required"
+                              : ""
+                          }
+                          onChange={submitCapstone.handleChange}
+                          onBlur={submitCapstone.handleBlur}
+                          value={submitCapstone.values.description}
+                          error={
+                            submitCapstone.touched.description &&
+                            submitCapstone.errors.description
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
+
+                    <Grid
+                      mb={2}
+                      sx={{ display: "flex", justifyContent: "center" }}
+                    >
+                      <ColorButton type="submit" size="small">
+                        Create Capstone
+                      </ColorButton>
+                    </Grid>
+                  </form>
+                  <div></div>
+                </CustomPaper>
               </Grid>
 
-              <Grid mb={2}>
-                <CustomTypography>Title</CustomTypography>
-                <FormControl fullWidth>
-                  <TextField
-                    type="text"
-                    id="outlined"
-                    label="Title"
-                    name="title"
-                    helperText={
-                      submitCapstone.touched.title &&
-                      submitCapstone.errors.title
-                        ? "Required"
-                        : ""
-                    }
-                    onChange={submitCapstone.handleChange}
-                    onBlur={submitCapstone.handleBlur}
-                    value={submitCapstone.values.title}
-                    error={
-                      submitCapstone.touched.title &&
-                      submitCapstone.errors.title
-                    }
-                  />
-                </FormControl>
-              </Grid>
+              <Grid item xs={12} sm={12} md={4} lg={4} marginLeft="50px">
+                <CustomPaper sx={{ p: 2 }}>
+                  <Typography variant="h4">Create Hackathon</Typography>
+                  <form
+                    autoComplete="off"
+                    noValidate
+                    onSubmit={submitHackathon.handleSubmit}
+                  >
+                    <Grid mb={2}>
+                      <CustomTypography>Student</CustomTypography>
+                      <FormControl fullWidth>
+                        <TextField
+                          type="text"
+                          id="outlined"
+                          label="Student"
+                          name="student"
+                          helperText={
+                            submitHackathon.touched.student &&
+                            submitHackathon.errors.student
+                              ? "Required"
+                              : ""
+                          }
+                          onChange={submitHackathon.handleChange}
+                          onBlur={submitHackathon.handleBlur}
+                          value={submitHackathon.values.student}
+                          error={
+                            submitHackathon.touched.student &&
+                            submitHackathon.errors.student
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
 
-              <Grid mb={2}>
-                <CustomTypography>Capstone Document Link</CustomTypography>
-                <FormControl fullWidth>
-                  <TextField
-                    type="text"
-                    id="outlined"
-                    label="Document Link"
-                    name="doclink"
-                    helperText={
-                      submitCapstone.touched.doclink &&
-                      submitCapstone.errors.doclink
-                        ? "Required"
-                        : ""
-                    }
-                    onChange={submitCapstone.handleChange}
-                    onBlur={submitCapstone.handleBlur}
-                    value={submitCapstone.values.doclink}
-                    error={
-                      submitCapstone.touched.doclink &&
-                      submitCapstone.errors.doclink
-                    }
-                  />
-                </FormControl>
-              </Grid>
+                    <Grid mb={2}>
+                      <CustomTypography>Title</CustomTypography>
+                      <FormControl fullWidth>
+                        <TextField
+                          type="text"
+                          id="outlined"
+                          label="Title"
+                          name="title"
+                          helperText={
+                            submitHackathon.touched.title &&
+                            submitHackathon.errors.title
+                              ? "Required"
+                              : ""
+                          }
+                          onChange={submitHackathon.handleChange}
+                          onBlur={submitHackathon.handleBlur}
+                          value={submitHackathon.values.title}
+                          error={
+                            submitHackathon.touched.title &&
+                            submitHackathon.errors.title
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
 
-              <Grid mb={2}>
-                <CustomTypography>
-                  Capstone Project Description
-                </CustomTypography>
-                <FormControl fullWidth>
-                  <TextField
-                    type="text"
-                    id="outlined"
-                    label="Description"
-                    name="description"
-                    helperText={
-                      submitCapstone.touched.description &&
-                      submitCapstone.errors.description
-                        ? "Required"
-                        : ""
-                    }
-                    onChange={submitCapstone.handleChange}
-                    onBlur={submitCapstone.handleBlur}
-                    value={submitCapstone.values.description}
-                    error={
-                      submitCapstone.touched.description &&
-                      submitCapstone.errors.description
-                    }
-                  />
-                </FormControl>
-              </Grid>
+                    <Grid mb={2}>
+                      <CustomTypography>
+                        Capstone Document Link
+                      </CustomTypography>
+                      <FormControl fullWidth>
+                        <TextField
+                          type="text"
+                          id="outlined"
+                          label="Document Link"
+                          name="doclink"
+                          helperText={
+                            submitHackathon.touched.doclink &&
+                            submitHackathon.errors.doclink
+                              ? "Required"
+                              : ""
+                          }
+                          onChange={submitHackathon.handleChange}
+                          onBlur={submitHackathon.handleBlur}
+                          value={submitHackathon.values.doclink}
+                          error={
+                            submitHackathon.touched.doclink &&
+                            submitHackathon.errors.doclink
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
 
-              <Grid mb={2} sx={{ display: "flex", justifyContent: "center" }}>
-                <ColorButton type="submit" size="small">
-                  Create Capstone
-                </ColorButton>
-              </Grid>
-            </form>
-            <div></div>
-          </CustomPaper>
-        </Grid>
+                    <Grid mb={2}>
+                      <CustomTypography>
+                        Capstone Project Description
+                      </CustomTypography>
+                      <FormControl fullWidth>
+                        <TextField
+                          type="text"
+                          id="outlined"
+                          label="Description"
+                          name="description"
+                          helperText={
+                            submitHackathon.touched.description &&
+                            submitHackathon.errors.description
+                              ? "Required"
+                              : ""
+                          }
+                          onChange={submitHackathon.handleChange}
+                          onBlur={submitHackathon.handleBlur}
+                          value={submitHackathon.values.description}
+                          error={
+                            submitHackathon.touched.description &&
+                            submitHackathon.errors.description
+                          }
+                        />
+                      </FormControl>
+                    </Grid>
 
-        <Grid item xs={12} sm={12} md={4} lg={4} marginLeft="50px">
-          <CustomPaper sx={{ p: 2 }}>
-            <Typography variant="h4">Create Hackathon</Typography>
-            <form
-              autoComplete="off"
-              noValidate
-              onSubmit={submitHackathon.handleSubmit}
-            >
-              <Grid mb={2}>
-                <CustomTypography>Student</CustomTypography>
-                <FormControl fullWidth>
-                  <TextField
-                    type="text"
-                    id="outlined"
-                    label="Student"
-                    name="student"
-                    helperText={
-                      submitHackathon.touched.student &&
-                      submitHackathon.errors.student
-                        ? "Required"
-                        : ""
-                    }
-                    onChange={submitHackathon.handleChange}
-                    onBlur={submitHackathon.handleBlur}
-                    value={submitHackathon.values.student}
-                    error={
-                      submitHackathon.touched.student &&
-                      submitHackathon.errors.student
-                    }
-                  />
-                </FormControl>
+                    <Grid
+                      mb={2}
+                      sx={{ display: "flex", justifyContent: "center" }}
+                    >
+                      <ColorButton type="submit" size="small">
+                        Create Hackathon
+                      </ColorButton>
+                    </Grid>
+                  </form>
+                </CustomPaper>
               </Grid>
-
-              <Grid mb={2}>
-                <CustomTypography>Title</CustomTypography>
-                <FormControl fullWidth>
-                  <TextField
-                    type="text"
-                    id="outlined"
-                    label="Title"
-                    name="title"
-                    helperText={
-                      submitHackathon.touched.title &&
-                      submitHackathon.errors.title
-                        ? "Required"
-                        : ""
-                    }
-                    onChange={submitHackathon.handleChange}
-                    onBlur={submitHackathon.handleBlur}
-                    value={submitHackathon.values.title}
-                    error={
-                      submitHackathon.touched.title &&
-                      submitHackathon.errors.title
-                    }
-                  />
-                </FormControl>
-              </Grid>
-
-              <Grid mb={2}>
-                <CustomTypography>Capstone Document Link</CustomTypography>
-                <FormControl fullWidth>
-                  <TextField
-                    type="text"
-                    id="outlined"
-                    label="Document Link"
-                    name="doclink"
-                    helperText={
-                      submitHackathon.touched.doclink &&
-                      submitHackathon.errors.doclink
-                        ? "Required"
-                        : ""
-                    }
-                    onChange={submitHackathon.handleChange}
-                    onBlur={submitHackathon.handleBlur}
-                    value={submitHackathon.values.doclink}
-                    error={
-                      submitHackathon.touched.doclink &&
-                      submitHackathon.errors.doclink
-                    }
-                  />
-                </FormControl>
-              </Grid>
-
-              <Grid mb={2}>
-                <CustomTypography>
-                  Capstone Project Description
-                </CustomTypography>
-                <FormControl fullWidth>
-                  <TextField
-                    type="text"
-                    id="outlined"
-                    label="Description"
-                    name="description"
-                    helperText={
-                      submitHackathon.touched.description &&
-                      submitHackathon.errors.description
-                        ? "Required"
-                        : ""
-                    }
-                    onChange={submitHackathon.handleChange}
-                    onBlur={submitHackathon.handleBlur}
-                    value={submitHackathon.values.description}
-                    error={
-                      submitHackathon.touched.description &&
-                      submitHackathon.errors.description
-                    }
-                  />
-                </FormControl>
-              </Grid>
-
-              <Grid mb={2} sx={{ display: "flex", justifyContent: "center" }}>
-                <ColorButton type="submit" size="small">
-                  Create Hackathon
-                </ColorButton>
-              </Grid>
-            </form>
-          </CustomPaper>
-        </Grid>
-      </Grid>
+            </Grid>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

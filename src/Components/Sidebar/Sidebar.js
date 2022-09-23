@@ -1,5 +1,6 @@
 import React from "react";
 import "./Sidebar.css";
+import logo from "../../Assets/zenLogo.png"
 import { Link, NavLink } from "react-router-dom";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import {
@@ -16,7 +17,10 @@ const Sidebar = ({ pageName, setPageName }) => {
   );
   console.log(role);
   return (
+    <>
+    
     <div className="firstCol">
+    <img src={logo} alt="logo" className="zen-logo" />
        {role === 'admin'?( 
       <>
         <NavLink
@@ -93,6 +97,7 @@ const Sidebar = ({ pageName, setPageName }) => {
         </ListItemButton>
       </NavLink>
     </div>
+    </>
   );
 };
 

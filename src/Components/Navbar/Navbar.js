@@ -141,7 +141,7 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" className="app-bar">
         <Toolbar>
-          <img src={logo} alt="logo" className="zen-logo" />
+          {/* <img src={logo} alt="logo" className="zen-logo" /> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

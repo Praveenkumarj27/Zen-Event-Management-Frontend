@@ -1,65 +1,54 @@
-import React, { useState } from "react";
-import Chart from "react-apexcharts";
+import React from "react";
 import "./Dashboard.css";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
-function Dashboard() {
-  const [state, setState] = useState({
-    options: {
-      colors: ["#E91E63", "#FF9800"],
-      chart: {
-        id: "basic-bar",
-      },
-      xaxis: {
-        categories: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ],
-      },
-    },
-    series: [
-      {
-        data: [30, 40, 45, 50, 34, 64, 50],
-      },
-    ],
-  });
-  return (
-      <>
+import Card from "./Card";
 
-      <Navbar></Navbar>
-      <Sidebar></Sidebar>
-      <div className="container" >
-        <div className="row">
-          <div className="col-4">
-            <Chart
-              options={state.options}
-              series={state.series}
-              type="bar"
-              width="450"
-            />
+function Dashboard() {
+  const cards = [
+    {
+      title: "Hackathon Tasks",
+      amount: "50%",
+      theme: "primary",
+      icons: "calendar",
+    },
+    {
+      title: "Capstone Tasks",
+      amount: "18%",
+      theme: "success",
+      icons: "dollar",
+    },
+    {
+      title: "Hackathon Submission",
+      amount: "50%",
+      theme: "info",
+      icons: "clipboard",
+    },
+    {
+      title: "Capstone Submission",
+      amount: "18%",
+      theme: "warning",
+      icons: "comments",
+    },
+  ];
+  return (
+    <div id="wrapper">
+      <Sidebar />
+      <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+          <Navbar />
+          <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
           </div>
-          {/* <div className="col-4">
-            <Chart
-              options={state.options}
-              series={state.series}
-              type="radar"
-              width="450"
-            />
-          </div> */}
+          <div className="row">
+            {cards.map((card) => {
+              return <Card data={card} />;
+            })}
+          </div>
         </div>
       </div>
-
-     </>
-    
+    </div>
   );
 }
 
 export default Dashboard;
-
-
-
