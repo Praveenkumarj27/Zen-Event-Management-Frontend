@@ -1,1 +1,1 @@
-export const url="https://zen-event-management.herokuapp.com"
+export const url="https://zen-event-management.onrender.com"
